@@ -15,8 +15,8 @@ public abstract class People implements Runnable{
 		this.app=app;
 		this.infected = infected;
 		this.healthy = healthy;
-		posX = (int) (app.random(100, 400));
-		posY = (int) (app.random(100, 400));
+		posX = (int) (app.random(200, 600));
+		posY = (int) (app.random(200, 600));
 		size = 7;
 	
 	}

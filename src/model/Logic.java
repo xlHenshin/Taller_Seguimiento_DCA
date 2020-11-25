@@ -42,19 +42,35 @@ public class Logic {
 		}
 		
 		System.out.println(people.size());
+		
+		createIndicator();
+		
+	}
+	
+	public void createIndicator() {
+		
+		indicator.add(new HealthyIndicator(app));
+		indicator.add(new InfectedIndicator(app));
+		indicator.add(new RecoveredIndicator(app));
+		System.out.println(indicator.size());
 	}
 	
 	public void paint() {
 		
-		for (int l = 0; l < people.size(); l++) {
-			people.get(l).paint();
-			Thread nuevoH = new Thread(people.get(l));
-			nuevoH.start();
+		for (int i = 0; i < people.size(); i++) {
+			people.get(i).paint();
+			Thread newPerson = new Thread(people.get(i));
+			newPerson.start();
+		}
+		
+		for (int i = 0; i < indicator.size(); i++) {
+			indicator.get(i).paint((i*20)+50);
 		}
 	}
+	
+	
 
 	public void sortList(char key) {
-		
 		
 	}
 
