@@ -10,6 +10,7 @@ public class Logic {
 	
 	private String [] file;
 	private LinkedList<People> people;
+	private LinkedList<Indicator> indicator;
 	
 	
 	public Logic (PApplet app) {
@@ -18,6 +19,7 @@ public class Logic {
 		
 		file= app.loadStrings("../resources/file");
 		people= new LinkedList<People>();
+		indicator= new LinkedList<Indicator>();
 		
 		for (int i = 0; i < file.length; i++) {
 
@@ -44,7 +46,11 @@ public class Logic {
 	
 	public void paint() {
 		
-		
+		for (int l = 0; l < people.size(); l++) {
+			people.get(l).paint();
+			Thread nuevoH = new Thread(people.get(l));
+			nuevoH.start();
+		}
 	}
 
 	public void sortList(char key) {
