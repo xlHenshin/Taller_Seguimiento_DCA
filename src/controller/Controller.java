@@ -10,18 +10,18 @@ public class Controller {
 	
 	public Controller (PApplet app) {
 		
-		logic = new Logic();
+		logic = new Logic(app);
 		this.app = app;
 	}
 	
 	public void sortList(char key) {
 		
-		
+		logic.sortList(key);
 	}
 
 	public void paint() {
 		
-		
+		logic.paint();
 	}
 
 }
