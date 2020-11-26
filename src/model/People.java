@@ -6,7 +6,7 @@ public abstract class People implements Runnable{
 
 	protected PApplet app;
 	
-	protected int posX, posY, size;
+	protected int posX, posY, size, speed;
 	protected float dirX, dirY;
 	protected boolean infected, healthy;
 	
@@ -18,17 +18,21 @@ public abstract class People implements Runnable{
 		posX = (int) (app.random(200, 600));
 		posY = (int) (app.random(200, 600));
 		size = 7;
+		dirX = app.random(-1, 1);
+		dirY = 1;
+		speed= 2;
 	
 	}
 	
 	public void paint() {
+	
 		
 		if(healthy == true && infected ==true){
 				
 			app.fill(0,0,255);
 			app.ellipse(posX, posY, size, size);
 			
-		}else if(infected) {
+		}else if (infected == true) {
 		
 			app.fill(255,0,0);
 			app.ellipse(posX, posY, size, size);
@@ -43,17 +47,25 @@ public abstract class People implements Runnable{
 	
 	public void move() {
 		
-		dirX = app.random(-2, 3);
-		dirY = app.random(-2, 3);
-		posX += dirX;
-		posY += dirY;
+		if(dirX == 0) {
+			dirX+=1;
+		}
+		
+		posX += dirX * speed;
+		posY += dirY * speed;
 
-		if (posX <= 40 || posX >= app.width - 40) {
+		if (dirX == 1) {
+			if (posX <= 200 || posX >= 600) {
+				dirX *= -1;
+			}
+		}
+		
+		if (posX <= 200 || posX >= 600) {
 			dirX *= -1;
-			dirY *= -1;
-		} 
-		if (posY <= 20|| posY >= app.height - 60) {
-			dirX *= -1;
+		}
+		 
+		if (posY <= 200 || posY >= 600) {
+			
 			dirY *= -1;
 		}
 	}
@@ -68,6 +80,7 @@ public abstract class People implements Runnable{
 				
 				Thread.sleep(14000);
 				healthy=true;
+				
 			} catch (InterruptedException e) {
 				// TODO: handle exception
 				

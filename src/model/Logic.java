@@ -36,7 +36,7 @@ public class Logic {
 			} else if (tipo.equals("infectadas")) {
 				people.add(new Infected(true, false, app));
 			} else {
-				people.add(new Infected(true, true, app));
+				people.add(new Healthy(true, true, app));
 			}
 
 		}
@@ -71,6 +71,14 @@ public class Logic {
 	
 
 	public void sortList(char key) {
+		
+	}
+	
+	public void infection () {
+		
+		for (int i = 0; i < people.size(); i++) {
+			
+		}
 		
 	}
 
