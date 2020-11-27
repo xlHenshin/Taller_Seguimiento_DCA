@@ -15,6 +15,8 @@ public class Logic {
 	private LinkedList<People> people;
 	private LinkedList<Indicator> indicator;
 	
+	private ColorComparator colorCompare;
+	
 	public Logic (PApplet app) {
 		
 		this.app = app;
@@ -22,7 +24,7 @@ public class Logic {
 		file= app.loadStrings("../resources/file");
 		people= new LinkedList<People>();
 		indicator= new LinkedList<Indicator>();
-		
+		colorCompare= new ColorComparator();
 		
 		
 		
@@ -109,19 +111,24 @@ public class Logic {
 		
 		for (int i = 0; i < indicator.size(); i++) {
 			
+			indicator.get(i).setColor(1);
 			indicator.get(i).setCounter(infected);
+			indicator.get(i).setColor(3);
 			indicator.get(i).setCounter(recovered);
 			
 			if (indicator.get(i) instanceof InfectedIndicator) {
 				
+				indicator.get(i).setColor(1);
 				indicator.get(i).setCounter(infected);
 				
 			} else if (indicator.get(i) instanceof RecoveredIndicator) {
 				
+				indicator.get(i).setColor(3);
 				indicator.get(i).setCounter(recovered);
 				
 			} else {
 				
+				indicator.get(i).setColor(2);
 				indicator.get(i).setCounter(healthy);
 			}
 		}
@@ -153,6 +160,8 @@ public class Logic {
 			System.out.println("==============");
 			System.out.println("Sort By Color");
 			System.out.println("==============");
+			
+			Collections.sort(indicator, colorCompare);
 			break;
 
 		default:

@@ -13,7 +13,7 @@ public class RecoveredIndicator extends Indicator{
 	public void paint(int posY) {
 		// TODO Auto-generated method stub
 		
-		app.fill(0);
+		app.fill(0,0,255);
 		app.text("Personas recuperadas: "+ counter, 50 , posY);
 	}
 

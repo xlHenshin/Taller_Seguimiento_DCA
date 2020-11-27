@@ -6,12 +6,13 @@ public abstract class Indicator implements Comparable<Indicator> {
 
 	protected PApplet app;
 	
-	protected int counter;
+	protected int counter, color;
 	
 	public Indicator(PApplet app) {
 		
 		this.app=app;
 		counter= 0;
+		color=0;
 	}
 	
 	public abstract void paint(int posY);
@@ -27,6 +28,16 @@ public abstract class Indicator implements Comparable<Indicator> {
 	public void setCounter(int counter) {
 		this.counter = counter;
 	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+	
+	
 	
 	
 }

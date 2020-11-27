@@ -13,7 +13,7 @@ public class InfectedIndicator extends Indicator {
 	public void paint(int posY) {
 		// TODO Auto-generated method stub
 		
-		app.fill(0);
+		app.fill(255,0,0);
 		app.text("Personas infectadas: "+ counter, 50 , posY);
 	}
 

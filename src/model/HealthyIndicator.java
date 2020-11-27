@@ -13,7 +13,7 @@ public class HealthyIndicator extends Indicator {
 	public void paint(int posY) {
 		// TODO Auto-generated method stub
 		
-		app.fill(0);
+		app.fill(0,255,0);
 		app.text("Personas sanas: "+ counter, 50 , posY);
 	}
 
