@@ -16,8 +16,8 @@ public abstract class People implements Runnable{
 		this.app=app;
 		this.infected = infected;
 		this.healthy = healthy;
-		posX = (int) (app.random(1, 700));
-		posY = (int) (app.random(1, 799));
+		posX = (int) (app.random(150, 650));
+		posY = (int) (app.random(150, 650));
 		size = 7;
 		
 		r = app.random(0,1);
@@ -31,7 +31,7 @@ public abstract class People implements Runnable{
 			dirX *=1;
 		}
 		dirY = 1;
-		speed= 1;
+		speed= 2;
 	
 	}
 	
@@ -65,15 +65,15 @@ public abstract class People implements Runnable{
 		posX += dirX * speed;
 		posY += dirY * speed;
 		
-		if (posX <= 0) {
+		if (posX <= 150) {
 			dirX *= -1;
 		}
 		
-		if (posX >= 800) {
+		if (posX >= 650) {
 			dirX *= -1;
 		}
 		 
-		if (posY <= 0 || posY >= 800) {
+		if (posY <= 150 || posY >= 650) {
 			
 			dirY *= -1;
 		}

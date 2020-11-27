@@ -1,8 +1,10 @@
 package model;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 import exception.Infection;
+import exception.Thirty;
 import processing.core.PApplet;
 
 public class Logic {
@@ -13,7 +15,6 @@ public class Logic {
 	private LinkedList<People> people;
 	private LinkedList<Indicator> indicator;
 	
-	
 	public Logic (PApplet app) {
 		
 		this.app = app;
@@ -22,6 +23,10 @@ public class Logic {
 		people= new LinkedList<People>();
 		indicator= new LinkedList<Indicator>();
 		
+		
+		
+		
+		//========================================
 		for (int i = 0; i < file.length; i++) {
 
 			String[] data = file[i].split(":");
@@ -46,7 +51,10 @@ public class Logic {
 		
 		System.out.println(people.size());
 		
+		//========================================
+		
 		createIndicator();
+		
 		
 	}
 	
@@ -57,6 +65,8 @@ public class Logic {
 		indicator.add(new RecoveredIndicator(app));
 		System.out.println(indicator.size());
 	}
+	
+	
 	
 	public void paint() {
 		
@@ -76,12 +86,78 @@ public class Logic {
 			// TODO Auto-generated catch block
 			System.out.println("Nuevo infectado");
 		}
+		
+		indicator();
+	}
+	
+	public void indicator() {
+		
+		int infected = 0;
+		int healthy = 0;
+		int recovered = 0;
+		
+		for (int i = 0; i < people.size(); i++) {
+
+			if (people.get(i).isHealthy()) {
+				recovered++;
+			} else if (people.get(i).isInfected()) {
+				infected++;
+			} else {
+				healthy++;
+			}
+		}
+		
+		for (int i = 0; i < indicator.size(); i++) {
+			
+			indicator.get(i).setCounter(infected);
+			indicator.get(i).setCounter(recovered);
+			
+			if (indicator.get(i) instanceof InfectedIndicator) {
+				
+				indicator.get(i).setCounter(infected);
+				
+			} else if (indicator.get(i) instanceof RecoveredIndicator) {
+				
+				indicator.get(i).setCounter(recovered);
+				
+			} else {
+				
+				indicator.get(i).setCounter(healthy);
+			}
+		}
+		
+		if (infected == 30) {
+			try {
+				throw new Thirty("30% de la población está infectada");
+			} catch (Thirty e) {
+				System.out.println("30% de la población está infectada");
+			}
+		}
+		
 	}
 	
 	
 
 	public void sortList(char key) {
 		
+		switch (key) {
+		case 'n':
+			System.out.println("==============");
+			System.out.println("Sort By Number");
+			System.out.println("==============");
+			
+			Collections.sort(indicator);
+			break;
+			
+		case 'p':
+			System.out.println("==============");
+			System.out.println("Sort By Color");
+			System.out.println("==============");
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 	public void infection () throws Infection{
@@ -89,36 +165,27 @@ public class Logic {
 		for (int i = 0; i < people.size(); i++) {
 			for (int j = 0; j < people.size(); j++) {
 				
-				if (i != people.size()) {
+				float probability = app.random(0, 100);
 
-					if (people.get(i) != people.get(j)) {
-						
-						int size = people.get(j).getSize();
+				if (probability < 20) {
+					
+					if (PApplet.dist(people.get(i).getPosX(), people.get(i).getPosY(), 
+							people.get(j).getPosX(), people.get(j).getPosY()) < people.get(j).getSize()) {
 
-						float probability = app.random(0, 100);
+						if (people.get(j) instanceof Healthy == people.get(i) instanceof Healthy) {
 
-						if (probability < 20) {
-							if (PApplet.dist(people.get(i).getPosX(), people.get(i).getPosY(), 
-									people.get(j).getPosX(), people.get(j).getPosY()) < size) {
+							people.get(i).getDirX();
+							people.get(i).getDirY();
+							people.get(j).getDirX();
+							people.get(j).getDirY();
 
-								if (people.get(j) instanceof Healthy == people.get(i) instanceof Healthy) {
+						} else if (people.get(j) instanceof Healthy
+								&& people.get(i).isHealthy()==false &&  people.get(i).isInfected())  {
 
-									people.get(i).getDirX();
-									people.get(i).getDirY();
-									people.get(j).getDirX();
-									people.get(j).getDirY();
+							people.add(new Infected(true, false, app));
+							people.remove(people.get(j));
 
-								} else if (people.get(j) instanceof Healthy
-										&& people.get(i).isHealthy()==false &&  people.get(i).isInfected())  {
-
-									people.add(new Infected(true, false, app));
-									people.remove(people.get(j));
-
-									throw new Infection("Nuevo infectado");
-
-								}
-
-							}
+							throw new Infection("Nuevo infectado");
 
 						}
 					}
