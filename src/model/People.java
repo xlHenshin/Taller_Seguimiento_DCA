@@ -65,11 +65,7 @@ public abstract class People implements Runnable{
 		posX += dirX * speed;
 		posY += dirY * speed;
 		
-		if (posX <= 150) {
-			dirX *= -1;
-		}
-		
-		if (posX >= 650) {
+		if (posX <= 150 || posX >= 650) {
 			dirX *= -1;
 		}
 		 
@@ -77,6 +73,8 @@ public abstract class People implements Runnable{
 			
 			dirY *= -1;
 		}
+		
+		
 	}
 	
 	public void run() {
@@ -152,6 +150,14 @@ public abstract class People implements Runnable{
 
 	public void setHealthy(boolean healthy) {
 		this.healthy = healthy;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 	
 	

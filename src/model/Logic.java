@@ -89,6 +89,7 @@ public class Logic {
 			System.out.println("Nuevo infectado");
 		}
 		
+		bounce();
 		indicator();
 	}
 	
@@ -100,7 +101,7 @@ public class Logic {
 		
 		for (int i = 0; i < people.size(); i++) {
 
-			if (people.get(i).isHealthy()) {
+			if (people.get(i).isHealthy()==true && people.get(i).isInfected()==true) {
 				recovered++;
 			} else if (people.get(i).isInfected()) {
 				infected++;
@@ -110,11 +111,6 @@ public class Logic {
 		}
 		
 		for (int i = 0; i < indicator.size(); i++) {
-			
-			indicator.get(i).setColor(1);
-			indicator.get(i).setCounter(infected);
-			indicator.get(i).setColor(3);
-			indicator.get(i).setCounter(recovered);
 			
 			if (indicator.get(i) instanceof InfectedIndicator) {
 				
@@ -176,11 +172,9 @@ public class Logic {
 				
 				float probability = app.random(0, 100);
 
-				if (probability < 20) {
+				if (probability < 90 && PApplet.dist(people.get(i).getPosX(), people.get(i).getPosY(), 
+						people.get(j).getPosX(), people.get(j).getPosY()) < people.get(j).getSize()) {
 					
-					if (PApplet.dist(people.get(i).getPosX(), people.get(i).getPosY(), 
-							people.get(j).getPosX(), people.get(j).getPosY()) < people.get(j).getSize()) {
-
 						if (people.get(j) instanceof Healthy == people.get(i) instanceof Healthy) {
 
 							people.get(i).getDirX();
@@ -189,19 +183,43 @@ public class Logic {
 							people.get(j).getDirY();
 
 						} else if (people.get(j) instanceof Healthy
-								&& people.get(i).isHealthy()==false &&  people.get(i).isInfected())  {
+								&& people.get(i).isHealthy()==false &&  people.get(i).isInfected()==true)  {
 
 							people.add(new Infected(true, false, app));
+							people.get(people.size()-1).setPosX(people.get(j).getPosX());
 							people.remove(people.get(j));
-
 							throw new Infection("Nuevo infectado");
 
 						}
-					}
 				}
 			}
 		}
 		
+	}
+	
+	public void bounce() {
+		
+		for (int i = 0; i < people.size(); i++) {
+			for (int j = 0; j < people.size(); j++) {
+				
+				if (PApplet.dist(people.get(i).getPosX(), people.get(i).getPosY(), 
+						people.get(j).getPosX(), people.get(j).getPosY()) < people.get(j).getSize()) {
+					
+					if (people.get(i)!= people.get(j)) {
+
+						int r = (int) app.random(-1,1);
+						
+						if(r == 0) {
+							r+=1;
+						}
+						
+						people.get(i).setSpeed(r);
+						people.get(j).setSpeed(r);
+
+                    }
+				}
+			}
+		}
 	}
 
 }
