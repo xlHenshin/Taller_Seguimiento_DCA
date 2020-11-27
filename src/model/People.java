@@ -6,8 +6,9 @@ public abstract class People implements Runnable{
 
 	protected PApplet app;
 	
-	protected int posX, posY, size, speed;
-	protected float dirX, dirY;
+	protected int posX, posY, size;
+	protected int dirX, dirY;
+	protected float r, speed;
 	protected boolean infected, healthy;
 	
 	public People(boolean infected, boolean healthy, PApplet app) {
@@ -15,12 +16,22 @@ public abstract class People implements Runnable{
 		this.app=app;
 		this.infected = infected;
 		this.healthy = healthy;
-		posX = (int) (app.random(200, 600));
-		posY = (int) (app.random(200, 600));
+		posX = (int) (app.random(1, 700));
+		posY = (int) (app.random(1, 799));
 		size = 7;
-		dirX = app.random(-1, 1);
+		
+		r = app.random(0,1);
+		
+		dirX=1;
+		if (r < 0.5) {
+			
+			dirX *=-1;
+		} else if(r >= 0.5) {
+			
+			dirX *=1;
+		}
 		dirY = 1;
-		speed= 2;
+		speed= 1;
 	
 	}
 	
@@ -53,18 +64,16 @@ public abstract class People implements Runnable{
 		
 		posX += dirX * speed;
 		posY += dirY * speed;
-
-		if (dirX == 1) {
-			if (posX <= 200 || posX >= 600) {
-				dirX *= -1;
-			}
+		
+		if (posX <= 0) {
+			dirX *= -1;
 		}
 		
-		if (posX <= 200 || posX >= 600) {
+		if (posX >= 800) {
 			dirX *= -1;
 		}
 		 
-		if (posY <= 200 || posY >= 600) {
+		if (posY <= 0 || posY >= 800) {
 			
 			dirY *= -1;
 		}
