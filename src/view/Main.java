@@ -26,6 +26,15 @@ public class Main extends PApplet{
 		
 		background(255);
 		controller.paint();
+		paintInformation();
+	}
+	
+	public void paintInformation() {
+		
+		fill(0);
+		text("Presione las siguientes teclas para ordenar:", 300 , 50);
+		text("N = Número de personas", 300 , 70);
+		text("P = Color de indicadores", 300 , 90);
 	}
 	
 	public void keyPressed() {
